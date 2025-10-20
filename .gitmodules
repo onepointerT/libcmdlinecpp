@@ -1,0 +1,6 @@
+[submodule "lib/liblogcpp"]
+	path = lib/liblogcpp
+	url = https://github.com/onepointerT/liblogcpp.git
+[submodule "lib/libjsoncpp"]
+	path = lib/libjsoncpp
+	url = https://github.com/onepointerT/jsoncpp.git

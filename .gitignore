@@ -4,3 +4,6 @@ build*
 /.project
 pkg/arch/pkg
 pkg/arch/src
+doc/xml
+*.bak
+.vscode
