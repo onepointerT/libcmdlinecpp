@@ -1,6 +1,6 @@
-project(libcmdlinecpp)
+cmake_minimum_required( VERSION 3.8 )
 
-cmake_minimum_required( VERSION 3.0 )
+project(libcmdlinecpp)
 
 set( LIBCMDLINECPP_STABLE_VERSION 1 )
 set( LIBCMDLINECPP_RELEASE 0 )
@@ -8,12 +8,37 @@ set( LIBCMDLINECPP_PATCH_VERSION 0 )
 set( LIBCMDLINECPP_VERSION "${LIBCMDLINECPP_STABLE_VERSION}.${LIBCMDLINECPP_RELEASE}.${LIBCMDLINECPP_PATCH_VERSION}" )
 add_definitions( -DLIBCMDLINECPP_VERSION="${LIBCMDLINECPP_VERSION}" )
 
+set( PROJECT_NAME "LibCmdLineC++" )
+set( PROJECT_VERSION "${LIBCMDLINECPP_VERSION}" )
+set( PROJECT_DESCRIPTION "A simple library to parse cmdline arguments with C++.")
+
 set( LIBCMDLINECPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
+
+option( BUILD_WITH_CONFIG_FUNCTIONALITY "Build the functionality to read configs with stdin and set config options from json config preset/file." ON )
+option( BUILD_WITH_LOGIO_FUNCTIONALITY "Build the functionality to wait for user input or show the library's results with additional cmdline parameter." OFF )
+
+
+if ( BUILD_WITH_CONFIG_FUNCTIONALITY )
+	set( BUILD_WITH_LOGIO_FUNCTIONALITY ON )
+endif()
+
+if ( BUILD_WITH_LOGIO_FUNCTIONALITY )
+	include_directories( ${PROJECT_SOURCE_DIR}/lib/liblogcpp/src )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/lib/liblogcpp )
+endif()
+
+
+if ( BUILD_WITH_CONFIG_FUNCTIONALITY )
+	include_directories( ${PROJECT_SOURCE_DIR}/lib/libjsoncpp/include )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/lib/libjsoncpp )
+endif()
+
 
 if( UNIX )
 	add_definitions( -std=c++11 )
 endif()
 add_definitions(-DCMDLINECPP_SRC_DIR=${LIBCMDLINECPP_SRC_DIR})
+
 
 
 if( CMDLINECPP_DESTDIR )
@@ -31,7 +56,7 @@ else()
 	set ( CMDLINECPP_LIB_INSTALL_DIR ${CMDLINECPP_DESTDIR}/lib )
 endif()
 
-
+include_directories( include )
 add_subdirectory( src )
 
 

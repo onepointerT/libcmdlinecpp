@@ -9,6 +9,16 @@ set( LIBCMDLINECPP_SOURCE actions.cpp
                           exceptions.cpp
                           parameters.cpp )
 
+if ( BUILD_WITH_LOGIO_FUNCTIONALITY )
+	set( LIBCMDLINECPP_SOURCE ${LIBCMDLINECPP_SOURCE} cmdlinelogio.cpp )
+endif()
+
+
+if ( BUILD_WITH_CONFIG_FUNCTIONALITY )
+	set( LIBCMDLINECPP_SOURCE ${LIBCMDLINECPP_SOURCE} cmdlineconfig.cpp configpreset.cpp )
+endif()
+
+
 if( CMDLINECPP_SHARED )
 	add_library( cmdlinecpp SHARED ${LIBCMDLINECPP_SOURCE} )
 	set( CMDLINECPP_PKGCONFIG_LIBNAME "libcmdlinecpp.so" )
